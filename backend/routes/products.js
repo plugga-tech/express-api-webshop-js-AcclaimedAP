@@ -1,8 +1,33 @@
 var express = require('express');
 var router = express.Router();
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const { ObjectId } = require('mongodb');
+module.exports = router;
+
+router.get('/', function (req, res) {
+  req.app.locals.db.collection("products").find().toArray()
+    .then(results => {
+      res.send(results)
+    })
 });
 
-module.exports = router;
+router.get('/:id', function (req, res) {
+  console.log(req.body.id);
+  req.app.locals.db.collection("users").findOne({ "_id": new ObjectId(req.params.id) })
+    .then(results => {
+      console.log(results);
+      res.send(results);
+    })
+});
+
+router.post('/add', function (req, res) {
+  const product = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    lager: req.body.lager
+  }
+  req.app.locals.db.collection("products").insertOne(product)
+    .then(() => {
+      res.send("Added product " + req.body.name);
+    })
+});

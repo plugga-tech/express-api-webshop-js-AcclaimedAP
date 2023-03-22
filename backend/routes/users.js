@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res) {
     console.log(req.body.id);
-    req.app.locals.db.collection("users").find({ "_id": new ObjectId(req.body.id) }).toArray()
+    req.app.locals.db.collection("users").findOne({ "_id": new ObjectId(req.body.id) })
         .then(results => {
             console.log(results);
             res.send(results);

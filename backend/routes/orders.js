@@ -6,3 +6,14 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+router.post('/add', function (req, res) {
+  
+})
+
+router.get('/all', function (req, res) {
+  req.app.locals.db.collection("orders").find().toArray()
+    .then(results => {
+    res.send(results)
+  })
+})
