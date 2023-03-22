@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function (req, res) {
   console.log(req.body.id);
-  req.app.locals.db.collection("users").findOne({ "_id": new ObjectId(req.params.id) })
+  req.app.locals.db.collection("products").findOne({ "_id": new ObjectId(req.params.id) })
     .then(results => {
       console.log(results);
       res.send(results);
