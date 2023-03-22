@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var CryptoJS = require("crypto-js");
+const { ObjectId } = require('mongodb');
 module.exports = router;
 const _salt = "I write spaghetti"
 
@@ -23,7 +24,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res) {
     console.log(req.body.id);
-    req.app.locals.db.collection("users").find({ _id: req.body.id }).toArray()
+    req.app.locals.db.collection("users").find({ "_id": new ObjectId(req.body.id) }).toArray()
         .then(results => {
             console.log(results);
             res.send(results);
